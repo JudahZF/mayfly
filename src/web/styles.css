@@ -1,0 +1,296 @@
+@import "tailwindcss";
+
+/* The palette of the plan page. Dark values replace these under prefers-color-scheme. */
+@theme {
+  --color-paper: #f1f5f3;
+  --color-raised: #ffffff;
+  --color-ink: #11211f;
+  --color-mid: #556763;
+  --color-line: #d3dcd8;
+  --color-river: #0d6b66;
+  --color-river-soft: #dcecea;
+  --color-amber: #9a5b00;
+  --color-amber-soft: #f6e8cf;
+  --color-rose: #a82a55;
+  --color-rose-soft: #f7dfe7;
+  --color-code: #e6ecea;
+  --font-serif: Charter, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-paper: #0d1615;
+    --color-raised: #152221;
+    --color-ink: #dde8e4;
+    --color-mid: #93a6a1;
+    --color-line: #2a3b39;
+    --color-river: #56c7be;
+    --color-river-soft: #16302e;
+    --color-amber: #e6a840;
+    --color-amber-soft: #33270f;
+    --color-rose: #f07a9e;
+    --color-rose-soft: #3a1826;
+    --color-code: #1a2a28;
+    color-scheme: dark;
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font: 15px/1.5 var(--font-sans);
+  }
+  h1,
+  h2 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    line-height: 1.15;
+  }
+  h1 {
+    font-size: 1.75rem;
+    letter-spacing: -0.01em;
+  }
+  h2 {
+    font-size: 1.15rem;
+  }
+  a {
+    color: var(--color-river);
+    text-underline-offset: 3px;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-river);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+}
+
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 38px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--color-line);
+    background: var(--color-raised);
+    color: var(--color-ink);
+    font-weight: 600;
+    font-size: 0.93rem;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 120ms, border-color 120ms;
+  }
+  .btn:hover {
+    border-color: var(--color-mid);
+  }
+  .btn:disabled {
+    opacity: 0.55;
+    cursor: default;
+  }
+  .btn-primary {
+    background: var(--color-river);
+    border-color: var(--color-river);
+    color: var(--color-paper);
+  }
+  .btn-primary:hover {
+    border-color: var(--color-ink);
+  }
+  .btn-danger {
+    color: var(--color-rose);
+  }
+  .btn-small {
+    min-height: 30px;
+    padding: 3px 10px;
+    font-size: 0.85rem;
+  }
+
+  .input {
+    width: 100%;
+    min-height: 42px;
+    padding: 8px 10px;
+    border: 1px solid var(--color-line);
+    border-radius: 8px;
+    background: var(--color-raised);
+    color: var(--color-ink);
+  }
+  .input:focus-visible {
+    outline-offset: 0;
+    border-color: var(--color-river);
+  }
+  .input[aria-invalid="true"] {
+    border-color: var(--color-rose);
+  }
+  textarea.input {
+    min-height: 84px;
+    resize: vertical;
+  }
+
+  .label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .label .req {
+    font-weight: 400;
+    color: var(--color-mid);
+  }
+  .hint {
+    color: var(--color-mid);
+    font-size: 0.85rem;
+  }
+  .error {
+    color: var(--color-rose);
+    font-size: 0.85rem;
+    margin-top: 4px;
+  }
+
+  /* Radio choices that look like a row of keys. Thumb-sized on a phone. */
+  .choices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .choice {
+    position: relative;
+  }
+  .choice input {
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+  .choice span {
+    display: flex;
+    align-items: center;
+    min-height: 42px;
+    padding: 6px 13px;
+    border: 1px solid var(--color-line);
+    border-radius: 8px;
+    background: var(--color-raised);
+    transition: background-color 120ms, color 120ms;
+  }
+  .choice input:checked + span {
+    background: var(--color-ink);
+    border-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+  .choice input:focus-visible + span {
+    outline: 2px solid var(--color-river);
+    outline-offset: 2px;
+  }
+
+  /* Sync state chips: one visual language on every screen. */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.78rem;
+    font-weight: 650;
+    line-height: 1;
+    padding: 4px 9px;
+    border-radius: 99px;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    animation: chip-in 260ms ease-out;
+  }
+  .chip::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 99px;
+    background: currentColor;
+    flex: none;
+  }
+  .chip-done {
+    background: var(--color-river-soft);
+    color: var(--color-river);
+  }
+  .chip-queued {
+    color: var(--color-amber);
+    border-color: var(--color-amber);
+  }
+  .chip-queued::before {
+    background: transparent;
+    border: 1.5px solid currentColor;
+  }
+  .chip-sending {
+    background: var(--color-amber-soft);
+    color: var(--color-amber);
+  }
+  .chip-sending::before {
+    animation: pulse 1.2s ease-in-out infinite;
+  }
+  .chip-problem {
+    background: var(--color-rose);
+    color: var(--color-paper);
+  }
+  .chip-draft {
+    color: var(--color-ink);
+    border: 1px dashed var(--color-ink);
+  }
+  .chip-draft::before {
+    background: transparent;
+    border: 1.5px dashed currentColor;
+  }
+  .chip-removed {
+    color: var(--color-mid);
+    background: var(--color-code);
+    text-decoration: line-through;
+  }
+
+  .panel {
+    background: var(--color-raised);
+    border: 1px solid var(--color-line);
+    border-radius: 10px;
+  }
+
+  .rows > * + * {
+    border-top: 1px solid var(--color-line);
+  }
+
+  .saved-flash {
+    animation: flash 1.4s ease-out;
+  }
+}
+
+@keyframes chip-in {
+  from {
+    transform: scale(0.85);
+    opacity: 0.4;
+  }
+}
+@keyframes pulse {
+  50% {
+    opacity: 0.25;
+  }
+}
+@keyframes flash {
+  from {
+    background-color: var(--color-river-soft);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
